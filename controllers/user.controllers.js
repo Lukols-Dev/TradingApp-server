@@ -5,11 +5,9 @@ const {
 } = require("firebase/auth");
 const { Timestamp, doc, setDoc } = require("firebase/firestore");
 const { firebaseAuth, firestore } = require("../config/firebase.config");
-
+const config = require("../config/keys");
 const Stripe = require("stripe");
-const stripe = Stripe(
-  "sk_test_51LNfR6A31XL5oAWCRl5fkHP8lb8M58E5xu8Rncj0oMZWCGbKmyfZrbP3ky4qVERa2g5xvpYXFtqLrXBc2Zd98gSI00AFqyQZo0"
-);
+const stripe = Stripe(config.stripeSecred);
 
 // Create new user
 const createUserAccount = async (req, res) => {
