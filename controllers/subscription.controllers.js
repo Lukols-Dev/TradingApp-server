@@ -7,7 +7,7 @@ const createCustomer = async (req, res) => {
     const customer = await stripe.customers.create({
       email: "lukaszolszewski96@gmail.com",
       name: "Łukasz Olszewski",
-      description: "My first test customer",
+      description: "",
     });
   } catch (error) {
     res.status(400).send(error.message);
