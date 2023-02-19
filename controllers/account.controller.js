@@ -1,4 +1,5 @@
-const { doc, getDoc, updateDoc } = require("firebase/firestore");
+const { doc, getDoc, updateDoc, deleteDoc } = require("firebase/firestore");
+const { deleteUser, getAuth } = require("firebase/auth");
 const { firestore } = require("../config/firebase.config");
 
 const getDataUserAccount = async (req, res) => {
@@ -8,6 +9,23 @@ const getDataUserAccount = async (req, res) => {
     const userAccountData = await getDoc(docRef);
 
     res.status(200).send(userAccountData.data());
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const updateUserAccountData = async (req, res) => {
+  const { userID, name, surname } = req.body;
+
+  try {
+    const docRef = doc(firestore, "USERS", `${userID}`);
+
+    const resp = await updateDoc(docRef, {
+      name: name,
+      surname: surname,
+    });
+
+    res.status(200).send(resp);
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -29,7 +47,23 @@ const updateSubscriptionID = async (req, res) => {
   }
 };
 
+const deleteUserAccount = async (req, res) => {
+  const userID = req.params.id;
+
+  try {
+    const auth = await getAuth();
+    const docRef = doc(firestore, "USERS", `${userID}`);
+    await deleteDoc(docRef);
+    const deleteAccountStatus = await deleteUser(auth.currentUser);
+    res.status(200).send(deleteAccountStatus);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 module.exports = {
   getDataUserAccount,
+  updateUserAccountData,
   updateSubscriptionID,
+  deleteUserAccount,
 };

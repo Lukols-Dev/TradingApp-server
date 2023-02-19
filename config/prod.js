@@ -10,7 +10,6 @@ module.exports = {
   messagingSenderId: process.env.MESSAGING_SENDER_ID,
   appId: process.env.APP_ID,
   measurementId: process.env.MEASUREMENT_ID,
-  userUID: process.env.USER_UID,
   frontendURL: process.env.FRONTEND_URL,
   stripeSecred: process.env.STRIPE_SECRED,
 };
