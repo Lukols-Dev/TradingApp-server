@@ -5,7 +5,13 @@ const { firestore } = require("../config/firebase.config");
 const getDayPositions = async (req, res) => {
   const day = req.query.currDay;
   const interval = req.query.interval;
-  const operations = ["cancel", "stop_loss", "take_profit"];
+  const operations = [
+    "cancel",
+    "stop_loss",
+    "take_profit",
+    "monitoring",
+    "trading",
+  ];
   let obj = new Object();
 
   try {
@@ -19,14 +25,18 @@ const getDayPositions = async (req, res) => {
         `${interval}`,
         `${operations[i]}`
       );
+
       const response = await getDocs(collRef);
-      response.forEach((doc) => items.push(doc.data()));
+
+      response.forEach((doc) => {
+        items.push(doc.data());
+      });
       Object.assign(obj, {
         [operations[i]]: response.size,
         [operations[i] + "_items"]: items,
       });
     }
-    // console.log("docs: ", obj);
+
     res.status(200).send(obj);
   } catch (error) {
     res.status(400).send(error.message);
