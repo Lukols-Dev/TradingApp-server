@@ -17,7 +17,7 @@ const getDayPositions = async (req, res) => {
         "SUMMARY",
         `${day}`,
         "POSITIONS",
-        `${interval}`,
+        `15m_LONG`,
         `${operations[i]}`
       );
 
