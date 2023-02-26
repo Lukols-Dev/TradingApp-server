@@ -26,8 +26,8 @@ const getDayPositions = async (req, res) => {
         items.push(doc.data());
       });
       Object.assign(obj, {
-        [operations[i]]: response.size,
-        [operations[i] + "_items"]: items,
+        [operations[i]]: response.size || 0,
+        [operations[i] + "_items"]: items || [],
       });
     }
 
