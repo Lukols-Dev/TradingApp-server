@@ -5,6 +5,7 @@ const { firestore } = require("../config/firebase.config");
 const getDayPositions = async (req, res) => {
   const day = req.query.currDay;
   const interval = req.query.interval;
+  if (!day || !interval) return;
   const operations = ["stop_loss", "take_profit"];
   let obj = new Object();
 
@@ -26,8 +27,8 @@ const getDayPositions = async (req, res) => {
         items.push(doc.data());
       });
       Object.assign(obj, {
-        [operations[i]]: response.size || 0,
-        [operations[i] + "_items"]: items || [],
+        [operations[i]]: response.size,
+        [operations[i] + "_items"]: items,
       });
     }
 
