@@ -32,7 +32,7 @@ const getDayPositions = async (req, res) => {
       });
     }
 
-    res.status(200).send(JSON.stringify(obj));
+    res.status(200).send(JSON.stringify("hello"));
   } catch (error) {
     res.status(400).send(error.message);
   }
