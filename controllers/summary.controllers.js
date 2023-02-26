@@ -5,13 +5,7 @@ const { firestore } = require("../config/firebase.config");
 const getDayPositions = async (req, res) => {
   const day = req.query.currDay;
   const interval = req.query.interval;
-  const operations = [
-    "cancel",
-    "stop_loss",
-    "take_profit",
-    "monitoring",
-    "trading",
-  ];
+  const operations = ["stop_loss", "take_profit"];
   let obj = new Object();
 
   try {
