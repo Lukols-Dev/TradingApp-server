@@ -24,7 +24,7 @@ const getDayPositions = async (req, res) => {
       const response = await getDocs(collRef);
 
       response.forEach((doc) => {
-        items.push(doc.data());
+        items.push(Object.assign(doc.data(), { label: operations[i] }));
       });
       Object.assign(obj, {
         [operations[i]]: response.size,

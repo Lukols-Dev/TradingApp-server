@@ -1,4 +1,11 @@
-const { doc, getDoc, updateDoc, deleteDoc } = require("firebase/firestore");
+const {
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  getDocs,
+  collection,
+} = require("firebase/firestore");
 const { deleteUser, getAuth } = require("firebase/auth");
 const { firestore } = require("../config/firebase.config");
 
@@ -9,6 +16,30 @@ const getDataUserAccount = async (req, res) => {
     const userAccountData = await getDoc(docRef);
 
     res.status(200).send(userAccountData.data());
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const getDataUserAccounts = async (req, res) => {
+  try {
+    const userID = req.params.id;
+    const docRef = collection(firestore, "USERS");
+    const userAccountData = await getDocs(docRef);
+    userAccountData.forEach((doc) => {
+      console.log(doc.data());
+    });
+    // res.status(200).send(userAccountData.data());
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const getDB = async (req, res) => {
+  try {
+    const userID = req.params.id;
+    console.log(firestore);
+    // res.status(200).send(userAccountData.data());
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -66,4 +97,6 @@ module.exports = {
   updateUserAccountData,
   updateSubscriptionID,
   deleteUserAccount,
+  getDataUserAccounts,
+  getDB,
 };
